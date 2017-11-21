@@ -20,7 +20,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="product in store.products | orderBy:'name'">
+					<tr ng-repeat="product in store.products" ng-click="item = 1">
 						<td>{{product.name}}</td>
 						<td>{{product.price | currency}}</td>
 						<td>{{product.description}}</td>
@@ -28,6 +28,26 @@
 					</tr>
 				</tbody>
 			</table>
+			<section>
+				<ul class="nav nav-pills">
+					<li><a href ng-click="tab = 1">Description</a></li>
+					<li><a href ng-click="tab = 2">Specifications</a></li>
+					<li><a href ng-click="tab = 3">Reviews</a></li>
+				</ul>
+			</section>
+			{{item}}
+			<div class="panel" ng-show="tab === 1">
+				<h4>Description</h4>
+				<p>{{product.description}}</p>
+			</div>
+			<div class="panel" ng-show="tab === 2">
+				<h4>Image</h4>
+				<p>{{product.description}}</p>
+			</div>
+			<div class="panel" ng-show="tab === 3">
+				<h4>Specifications</h4>
+				<p>{{product.description}}</p>
+			</div>
 		</div>
 	</body>
 </html>
