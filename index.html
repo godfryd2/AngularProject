@@ -16,13 +16,15 @@
 						<th>Name</th>
 						<th>Price</th>
 						<th class="product-description">Description</th>
+						<th>Image</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="product in store.products">
+					<tr ng-repeat="product in store.products | orderBy:'name'">
 						<td>{{product.name}}</td>
-						<td>${{product.price}}</td>
+						<td>{{product.price | currency}}</td>
 						<td>{{product.description}}</td>
+						<td><img ng-src="{{product.image.thumb}}"/></td>
 					</tr>
 				</tbody>
 			</table>
