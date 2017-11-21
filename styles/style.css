@@ -1,0 +1,19 @@
+body {
+    background: grey;
+}
+.container {
+    background: white;
+    margin-top:100px;
+    border-radius: 10px;
+}
+.h2-header {
+    text-align: center;
+    font-weight: bold;
+}
+.table-header {
+    background: black;
+    color: white;
+}
+.product-description {
+    text-align: center;
+}
