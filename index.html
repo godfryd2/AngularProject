@@ -13,6 +13,7 @@
 			<table class="table table-hover table-striped">
 				<thead class="table-header">
 					<tr>
+						<th><input type="checkbox" ng-model="all"></th>
 						<th>Name</th>
 						<th>Price</th>
 						<th class="product-description">Description</th>
@@ -20,7 +21,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="product in store.products" ng-click="item = 1">
+					<tr ng-repeat="product in store.products" ng-click="setValue(product.id)">
+						<td><input type="checkbox" ng-checked="all"></td>
 						<td>{{product.name}}</td>
 						<td>{{product.price | currency}}</td>
 						<td>{{product.description}}</td>
@@ -28,26 +30,83 @@
 					</tr>
 				</tbody>
 			</table>
-			<section>
+
+			<section ng-controller="PanelController as panel">
 				<ul class="nav nav-pills">
-					<li><a href ng-click="tab = 1">Description</a></li>
-					<li><a href ng-click="tab = 2">Specifications</a></li>
-					<li><a href ng-click="tab = 3">Reviews</a></li>
+					<li ng-class="{active:panel.isSelected(1)}">
+						<a href ng-click="panel.selectTab(1)">Description</a>
+					</li>
+					<li ng-class="{active:panel.isSelected(2)}">
+						<a href ng-click="panel.selectTab(2)">Price</a>
+					</li>
+					<li ng-class="{active:panel.isSelected(3)}">
+						<a href ng-click="panel.selectTab(3)">Image</a>
+					</li>
+					<!-- <li ng-class="{active:panel.isSelected(4)}">
+						<a href ng-click="panel.selectTab(4)">Names</a>
+					</li> -->
+					<li ng-class="{active:panel.isSelected(5)}">
+						<a href ng-click="panel.selectTab(5)">Reviews</a>
+					</li>
 				</ul>
+
+				<div class="panel" ng-show="panel.isSelected(1)">
+					<h4>Description</h4>
+					<p>{{store.products[getValue()].description}}</p>
+				</div>
+				<div class="panel" ng-show="panel.isSelected(2)">
+					<h4>Price</h4>
+					<p>{{store.products[getValue()].price | currency}}</p>
+				</div>
+				<div class="panel" ng-show="panel.isSelected(3)">
+					<h4>Image</h4>
+					<img ng-src="{{store.products[getValue()].image.full}}"/>
+				</div>
+				<!-- <div class="panel" ng-show="panel.isSelected(4)">
+					<h4>Select name</h4>
+					<select ng-model="selectedName" ng-init="selectedName = store.names[0]" ng-options="x for x in store.names"></select>
+				</div> -->
+				 <div class="panel" ng-show="panel.isSelected(5)">
+					<h4>Reviews</h4>
+					<table class="table table-hover table-striped">
+						<thead class="table-header">
+							<tr>
+								<th>Stars</th>
+								<th>Comment</th>
+								<th>Author</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="review in store.products[getValue()].reviews">
+								<td><b>Stars: {{review.stars}}</b></td>
+								<td>{{review.body}}</td>
+								<td>{{review.author}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					
+					
+				</div>
+				<div class="form">
+					<h4>Submit a review</h4>
+					<form name="reviewForm">
+						<label>Stars:</label>
+						<select>
+							<option value="1">1 star</option>
+							<option value="2">2 stars</option>
+							<option value="3">3 stars</option>
+							<option value="4">4 stars</option>
+							<option value="5">5 stars</option>
+						</select><br />
+						<label>Review:</label>
+						<textarea class="review-content"></textarea><br />
+						<label>Author:</label>
+						<input type="email" class="review-author"/><br />
+						<input type="submit" class="submit-button" value="Submit">
+					</form>
+				</div>
 			</section>
-			{{item}}
-			<div class="panel" ng-show="tab === 1">
-				<h4>Description</h4>
-				<p>{{product.description}}</p>
-			</div>
-			<div class="panel" ng-show="tab === 2">
-				<h4>Image</h4>
-				<p>{{product.description}}</p>
-			</div>
-			<div class="panel" ng-show="tab === 3">
-				<h4>Specifications</h4>
-				<p>{{product.description}}</p>
-			</div>
 		</div>
 	</body>
 </html>
