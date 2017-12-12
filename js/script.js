@@ -4,17 +4,38 @@
     app.controller('StoreController', function($scope){
 
         this.products = gems;
-        this.names = names;
-        
-        $scope.selectedValue = null;
+        this.review = {
+            stars: null,
+            body: null,
+            author: null
+        };
 
         $scope.setValue = function(value){
             $scope.selectedValue = value;
+            this.review = {
+                stars: null,
+                body: null,
+                author: null
+            };
         };
 
         $scope.getValue = function(){
             return $scope.selectedValue;
         };
+
+        this.addReview = function(value) {
+            if(!isNaN(value)) {
+                this.products[value].reviews.push(this.review);
+                this.review.createdOn = Date.now();
+                console.log(this.products[value].reviews);
+            } 
+            this.review = {
+                stars: null,
+                body: null,
+                author: null
+            };
+        };
+
     });
 
     app.controller('PanelController', function() {
@@ -31,8 +52,6 @@
         };
     });
 
-    var names = ["Dodecahedron", "Pentagonal Gem", "Normal Gem", "Octagon Gem", "Figure", "Non Gem"]
-
     var gems = [
         {
             id: 0,
@@ -48,12 +67,14 @@
                 {
                     stars: 5,
                     body: "I love this product!",
-                    author: "joe@thomas.com"
+                    author: "joe@thomas.com",
+                    createdOn: 1513071540656
                 },
                 {
                     stars: 1,
                     body: "This product sucks!",
-                    author: "tim@hater.com"
+                    author: "tim@hater.com",
+                    createdOn: 1513071540656
                 }
             ],
             canPurchase: true,
@@ -68,6 +89,7 @@
                     full: 'img/image-full.png',
                     thumb: 'img/image-thumb.png',
                 },
+            reviews: [],
             description: 'The mock Http service can be implemented with a factory method. We just need to use the following fakeBackendFactory method in place of standard Http service.',
             canPurchase: true,
             soldOut: true,
@@ -81,6 +103,7 @@
                     full: 'img/image-full.png',
                     thumb: 'img/image-thumb.png',
                 },
+            reviews: [],
             description: 'Before implementing a fake or mock Http service, we need data. Let’s create a mock database as simple array of employees objects.',
             canPurchase: true,
             soldOut: true,
@@ -94,6 +117,7 @@
                     full: 'img/image-full.png',
                     thumb: 'img/image-thumb.png',
                 },
+            reviews: [],
             description: 'The domain model object Employee is defined by the following interface.',
             canPurchase: true,
             soldOut: true,
@@ -107,6 +131,7 @@
                     full: 'img/image-full.png',
                     thumb: 'img/image-thumb.png',
                 },
+            reviews: [],
             description: 'Welcome to our Game Update! It’s been great seeing all the feedback you’re providing for our game!',
             canPurchase: true,
             soldOut: true,
@@ -120,6 +145,7 @@
                     full: 'img/image-full.png',
                     thumb: 'img/image-thumb.png',
                 },
+            reviews: [],
             description: 'Thank you all for your patience as we continue to optimize the game for PC and enforce in-game security.',
             canPurchase: true,
             soldOut: true,

@@ -42,11 +42,8 @@
 					<li ng-class="{active:panel.isSelected(3)}">
 						<a href ng-click="panel.selectTab(3)">Image</a>
 					</li>
-					<!-- <li ng-class="{active:panel.isSelected(4)}">
-						<a href ng-click="panel.selectTab(4)">Names</a>
-					</li> -->
-					<li ng-class="{active:panel.isSelected(5)}">
-						<a href ng-click="panel.selectTab(5)">Reviews</a>
+					<li ng-class="{active:panel.isSelected(4)}">
+						<a href ng-click="panel.selectTab(4)">Reviews</a>
 					</li>
 				</ul>
 
@@ -62,11 +59,7 @@
 					<h4>Image</h4>
 					<img ng-src="{{store.products[getValue()].image.full}}"/>
 				</div>
-				<!-- <div class="panel" ng-show="panel.isSelected(4)">
-					<h4>Select name</h4>
-					<select ng-model="selectedName" ng-init="selectedName = store.names[0]" ng-options="x for x in store.names"></select>
-				</div> -->
-				 <div class="panel" ng-show="panel.isSelected(5)">
+				 <div class="panel" ng-show="panel.isSelected(4)">
 					<h4>Reviews</h4>
 					<table class="table table-hover table-striped">
 						<thead class="table-header">
@@ -74,6 +67,7 @@
 								<th>Stars</th>
 								<th>Comment</th>
 								<th>Author</th>
+								<th>Date</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -81,30 +75,29 @@
 								<td><b>Stars: {{review.stars}}</b></td>
 								<td>{{review.body}}</td>
 								<td>{{review.author}}</td>
+								<td>{{review.createdOn | date}}</td>
 							</tr>
 						</tbody>
 					</table>
-
-					
-					
-				</div>
-				<div class="form">
-					<h4>Submit a review</h4>
-					<form name="reviewForm">
-						<label>Stars:</label>
-						<select>
-							<option value="1">1 star</option>
-							<option value="2">2 stars</option>
-							<option value="3">3 stars</option>
-							<option value="4">4 stars</option>
-							<option value="5">5 stars</option>
-						</select><br />
-						<label>Review:</label>
-						<textarea class="review-content"></textarea><br />
-						<label>Author:</label>
-						<input type="email" class="review-author"/><br />
-						<input type="submit" class="submit-button" value="Submit">
-					</form>
+					<div class="form">
+						<h4>Submit a review</h4>
+						<form name="reviewFrom" ng-controller="StoreController as store" ng-submit="store.addReview(getValue())" >
+							<label>Stars:</label>
+							<select class="selectpicker" ng-model="store.review.stars" required>
+								<option value="1">1 star</option>
+								<option value="2">2 stars</option>
+								<option value="3">3 stars</option>
+								<option value="4">4 stars</option>
+								<option value="5">5 stars</option>
+							</select><br />
+							<label>Review:</label>
+							<textarea class="review-content" ng-model="store.review.body" required></textarea><br />
+							<label>Author:</label>
+							<input type="email" name="author" class="review-author" ng-model="store.review.author" required/><br />
+							<div>reviewForm is {{reviewFrom.$valid}}</div>
+							<input type="submit" class="submit-button" value="Submit">
+						</form>
+					</div>
 				</div>
 			</section>
 		</div>
